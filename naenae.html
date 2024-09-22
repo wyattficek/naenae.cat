@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Naenae Cat Central</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+            background-color: #f5f5f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            background: url('cat-dancing.gif') no-repeat center center fixed;
+            background-size: cover;
+            animation: normalDance 3s infinite;
+        }
+        #overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+        }
+        #content {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            color: white;
+        }
+        h1 {
+            font-size: 4em;
+            margin: 0;
+            padding: 20px;
+        }
+        #danceButton {
+            background-color: #ff0066;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.5em;
+            cursor: pointer;
+            color: white;
+            margin-top: 20px;
+            border-radius: 50px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        #danceButton:hover {
+            background-color: #ff3399;
+        }
+        #muteButton {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            background-color: #333;
+            border: none;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        audio {
+            display: none;
+        }
+        /* Animation for speeding up dance */
+        @keyframes normalDance {
+            0% { background-position: 0; }
+            100% { background-position: 100%; }
+        }
+
+        @keyframes fastDance {
+            0% { background-position: 0; }
+            100% { background-position: 100%; }
+        }
+
+        .fastDance {
+            animation: fastDance 1s infinite !important;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="overlay"></div>
+
+    <div id="content">
+        <h1>Welcome to Naenae Cat Central!</h1>
+        <button id="danceButton">Press to Nae Nae!</button>
+    </div>
+
+    <button id="muteButton">Mute Music</button>
+
+    <audio id="backgroundMusic" loop>
+        <source src="music.mp3" type="audio/mpeg">
+        Your browser does not support the audio tag.
+    </audio>
+
+    <script>
+        const danceButton = document.getElementById('danceButton');
+        const muteButton = document.getElementById('muteButton');
+        const backgroundMusic = document.getElementById('backgroundMusic');
+        let musicPlaying = true;
+        let isDancingFast = false;
+
+        // Start music after the page loads
+        window.onload = function() {
+            backgroundMusic.play();
+        };
+
+        // Nae Nae Button - Speed up the dance
+        danceButton.addEventListener('click', function() {
+            if (isDancingFast) {
+                document.body.classList.remove('fastDance');
+                danceButton.textContent = 'Press to Nae Nae!';
+            } else {
+                document.body.classList.add('fastDance');
+                danceButton.textContent = 'Nae Nae Faster!';
+            }
+            isDancingFast = !isDancingFast;
+        });
+
+        // Mute or unmute music
+        muteButton.addEventListener('click', function() {
+            if (musicPlaying) {
+                backgroundMusic.pause();
+                muteButton.textContent = 'Unmute Music';
+            } else {
+                backgroundMusic.play();
+                muteButton.textContent = 'Mute Music';
+            }
+            musicPlaying = !musicPlaying;
+        });
+    </script>
+
+</body>
+</html>
